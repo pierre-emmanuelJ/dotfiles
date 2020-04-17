@@ -1,5 +1,7 @@
 # Dotefiles
 
+Dotfiles for Ubuntu >= 16.04 LTS
+
 ## Install
 
 ```
