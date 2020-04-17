@@ -99,6 +99,7 @@ touch "$HOME/traefik/acme.json" && \
 sed -i "s/example.com/$DOMAIN_NAME/g" "$HOME/traefik/traefik.toml"
 cd "$HOME/traefik/" && sudo docker-compose up -d && cd -
 mkdir -p ".local/share/code-server/extensions"
+chown -R ubuntu .local
 
 # Get our zshrc back
 $LN "$DOTFILES_FOLDER/zshrc" "$HOME/.zshrc"
