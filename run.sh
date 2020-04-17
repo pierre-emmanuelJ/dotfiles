@@ -56,6 +56,11 @@ sudo usermod -aG docker "$USER"
 sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
+#Install kubectl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+
 #Install podman
 . /etc/os-release
 sudo sh -c "echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
@@ -70,6 +75,11 @@ read -r GO_VERSION
 mkdir "$HOME/go"
 wget -4 "https://dl.google.com/go/go$GO_VERSION.linux-amd64.tar.gz"
 sudo tar -C /usr/local -xzf "go$GO_VERSION.linux-amd64.tar.gz"
+GOPATH=/home/ubuntu/go
+PATH=$PATH:/usr/local/go/bin:"$GOPATH"/bin
+
+#Install kind
+GO111MODULE="on" go get sigs.k8s.io/kind
 
 #Install node
 curl -4 -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
@@ -88,11 +98,12 @@ touch "$HOME/traefik/acme.json" && \
         chmod 600 "$HOME/traefik/acme.json"
 sed -i "s/example.com/$DOMAIN_NAME/g" "$HOME/traefik/traefik.toml"
 cd "$HOME/traefik/" && sudo docker-compose up -d && cd -
+mkdir -p ".local/share/code-server/extensions"
 
 # Get our zshrc back
 $LN "$DOTFILES_FOLDER/zshrc" "$HOME/.zshrc"
-echo export DOMAIN_NAME="$DOMAIN_NAME" >> "$HOME/.zshrc"
-echo export VSCODE_PASSWORD="$VSCODE_PASSWORD" >> "$HOME/.zshrc"
+sed -i "s/my_example.com/$DOMAIN_NAME/g" "$HOME/.zshrc"
+sed -i "s/my_example_password/$VSCODE_PASSWORD/g" "$HOME/.zshrc"
 
 
 #Exoscale

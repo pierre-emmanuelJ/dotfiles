@@ -20,6 +20,8 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 export MANPATH="/usr/local/man:$MANPATH"
 export GPG_TTY=/dev/pts/0s
+export DOMAIN_NAME=my_example.com
+export VSCODE_PASSWORD=my_example_password
 
 #Alias
 alias k=kubectl
