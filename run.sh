@@ -56,6 +56,13 @@ sudo usermod -aG docker "$USER"
 sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
+#Install podman
+. /etc/os-release
+sudo sh -c "echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
+curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key | sudo apt-key add -
+sudo apt-get update -qq
+sudo apt-get -qq -y install podman
+
 printf "Enter Golang version:"
 read -r GO_VERSION
 
@@ -79,7 +86,7 @@ read -r VSCODE_PASSWORD
 cp -r "$DOTFILES_FOLDER/traefik" "$HOME"
 touch "$HOME/traefik/acme.json" && \
         chmod 600 "$HOME/traefik/acme.json"
-sed "s/example.com/$DOMAIN_NAME/g" "$HOME/traefik/traefik.toml"
+sed -i "s/example.com/$DOMAIN_NAME/g" "$HOME/traefik/traefik.toml"
 cd "$HOME/traefik/" && sudo docker-compose up -d && cd -
 
 # Get our zshrc back
@@ -90,6 +97,5 @@ echo export VSCODE_PASSWORD="$VSCODE_PASSWORD" >> "$HOME/.zshrc"
 
 #Exoscale
 sudo snap install exoscale-cli
-exo config
 
 echo "run: source ~/.zshrc"
