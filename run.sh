@@ -56,7 +56,7 @@ sudo usermod -aG docker "$USER"
 sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-echo -n "Enter Golang version:"
+printf "Enter Golang version:"
 read -r GO_VERSION
 
 #Install Golang
@@ -69,12 +69,12 @@ curl -4 -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | ba
 
 #install alias script
 mkdir "$HOME/.bin"
-cp "$DOTFILES_FOLDER/scripts/*" "$HOME/.bin"
+cp "$DOTFILES_FOLDER"/scripts/* "$HOME/.bin"
 
 #Install VScode
-echo -n "Enter a domain name pointing on this machine:"
+printf "Enter a domain name pointing on this machine:"
 read -r DOMAIN_NAME
-echo -n "Enter a password for VScode web:"
+printf "Enter a password for VScode web:"
 read -r VSCODE_PASSWORD
 cp -r "$DOTFILES_FOLDER/traefik" "$HOME"
 touch "$HOME/traefik/acme.json" && \
