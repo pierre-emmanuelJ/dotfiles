@@ -23,6 +23,7 @@ curl -sSL https://raw.githubusercontent.com/pierre-emmanuelJ/dotfiles/master/ins
           EXOSCALE_SECRET_KEY=XXXXXX \
           S3_ENDPOINT="https://sos-ch-dk-2.exo.io" \
           CLOUD_BUCKET_NAME=cloud \
+          GOOFYS_VERSION=v0.24.0 \
           GIT_NAME="Pierre-Emmanuel Jacquier" \
           GIT_EMAIL="15922119+pierre-emmanuelJ@users.noreply.github.com" \
           sh
