@@ -108,6 +108,8 @@ GO111MODULE="on" go get sigs.k8s.io/kind
 
 #Install node
 curl -4 -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 nvm install 12.16 #(not used frequently) Can be added to input var
 
 #install alias script
