@@ -155,6 +155,8 @@ chmod 600 "$HOME/.passwd-s3fs"
 wget -4 "https://github.com/kahing/goofys/releases/download/$GOOFYS_VERSION/goofys"
 chmod +x goofys && sudo mv goofys /usr/local/bin
 
+#goofys --file-mode=0666 --dir-mode=0777 --endpoint "https://sos-ch-dk-2.exo.io" cloud  "$HOME/Cloud"
+
 s3fs -o url="$S3_ENDPOINT" "$CLOUD_BUCKET_NAME:/" "$HOME/Cloud"
 
 echo "run: source ~/.zshrc"
