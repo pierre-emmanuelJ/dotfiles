@@ -1,9 +1,4 @@
 #!/bin/sh
-#
-#   'curl -sSL https://raw.githubusercontent.com/pierre-emmanuelJ/dotfiles/master/install.sh | sh'
-#   or:
-#   'wget -qO- https://raw.githubusercontent.com/pierre-emmanuelJ/dotfiles/master/install.sh | sh'
-#
 set -ex
 
 if [ "$(id -u)" -eq 0 ]; then
@@ -12,7 +7,7 @@ if [ "$(id -u)" -eq 0 ]; then
 fi
 
 sudo apt-get update
-sudo apt-get install -y git
+sudo apt-get install -y git bash curl wget
 
 cd "$HOME"
 git clone --recursive https://github.com/pierre-emmanuelJ/dotfiles

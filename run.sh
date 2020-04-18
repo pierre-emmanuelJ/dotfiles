@@ -29,7 +29,25 @@ PACKAGES=(
   zsh
   vim
   python-pip
+  fuse
+  s3fs
 )
+
+function is_set() {
+    local -n ref=$1
+
+    if [ -z "$ref" ]
+    then
+        printf "%s:" "$2"
+        read -r ref
+    fi
+}
+
+is_set DOMAIN_NAME "Enter a domain name pointing on this machine"
+is_set VSCODE_PASSWORD "Enter a password for VScode web"
+is_set GO_VERSION "Enter Golang version"
+is_set EXOSCALE_API_KEY "Enter Exoscale api key"
+is_set EXOSCALE_SECRET_KEY "Enter Exoscale secret key"
 
 if [ -x "$(command -v apt-get)" ]; then
   echo "Installing packages"
@@ -68,9 +86,6 @@ curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/
 sudo apt-get update -qq
 sudo apt-get -qq -y install podman
 
-printf "Enter Golang version:"
-read -r GO_VERSION
-
 #Install Golang
 mkdir "$HOME/go"
 wget -4 "https://dl.google.com/go/go$GO_VERSION.linux-amd64.tar.gz"
@@ -86,13 +101,9 @@ curl -4 -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | ba
 
 #install alias script
 mkdir "$HOME/.bin"
-cp "$DOTFILES_FOLDER"/scripts/* "$HOME/.bin"
+$LN "$DOTFILES_FOLDER"/scripts/* "$HOME/.bin"
 
 #Install VScode
-printf "Enter a domain name pointing on this machine:"
-read -r DOMAIN_NAME
-printf "Enter a password for VScode web:"
-read -r VSCODE_PASSWORD
 cp -r "$DOTFILES_FOLDER/traefik" "$HOME"
 touch "$HOME/traefik/acme.json" && \
         chmod 600 "$HOME/traefik/acme.json"
