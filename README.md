@@ -21,5 +21,9 @@ curl -sSL https://raw.githubusercontent.com/pierre-emmanuelJ/dotfiles/master/ins
           GO_VERSION=1.14.2 \
           EXOSCALE_API_KEY=EXO.... \
           EXOSCALE_SECRET_KEY=XXXXXX \
+          S3_ENDPOINT="https://sos-ch-dk-2.exo.io" \
+          CLOUD_BUCKET_NAME=cloud \
+          GIT_NAME="Pierre-Emmanuel Jacquier" \
+          GIT_EMAIL="15922119+pierre-emmanuelJ@users.noreply.github.com" \
           sh
 ```
