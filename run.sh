@@ -30,7 +30,6 @@ PACKAGES=(
   vim
   python-pip
   python3
-  python3-pip
   coreutils
   fuse
   s3fs
