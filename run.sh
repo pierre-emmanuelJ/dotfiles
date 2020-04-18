@@ -29,9 +29,16 @@ PACKAGES=(
   zsh
   vim
   python-pip
+  python3
+  python3-pip
+  coreutils
   fuse
   s3fs
 )
+
+#User Creation
+mkdir -p "$HOME/Downloads"
+mkdir -p "$HOME/Documents"
 
 function is_set() {
     local -n ref=$1
@@ -48,6 +55,10 @@ is_set VSCODE_PASSWORD "Enter a password for VScode web"
 is_set GO_VERSION "Enter Golang version"
 is_set EXOSCALE_API_KEY "Enter Exoscale api key"
 is_set EXOSCALE_SECRET_KEY "Enter Exoscale secret key"
+is_set S3_ENDPOINT "Enter S3 custom endpoint"
+is_set CLOUD_BUCKET_NAME "Enter an s3 bucket for your Cloud"
+is_set GIT_NAME "Enter git config name"
+is_set GIT_EMAIL "Enter git config email"
 
 if [ -x "$(command -v apt-get)" ]; then
   echo "Installing packages"
@@ -98,6 +109,7 @@ GO111MODULE="on" go get sigs.k8s.io/kind
 
 #Install node
 curl -4 -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+nvm install 12.16 #(not used frequently) Can be added to input var
 
 #install alias script
 mkdir "$HOME/.bin"
@@ -112,6 +124,11 @@ cd "$HOME/traefik/" && sudo docker-compose up -d && cd -
 mkdir -p "$HOME/.local/share/code-server/extensions"
 chown -R ubuntu "$HOME/.local"
 
+#GIT config
+$LN "$DOTFILES_FOLDER/gitconfig" "$HOME/.gitconfig"
+sed -i "s/name_example/$GIT_NAME/g" "$HOME/.gitconfig"
+sed -i "s/email@example.com/$GIT_EMAIL/g" "$HOME/.gitconfig"
+
 # Get our zshrc back
 $LN "$DOTFILES_FOLDER/zshrc" "$HOME/.zshrc"
 sed -i "s/my_example.com/$DOMAIN_NAME/g" "$HOME/.zshrc"
@@ -120,5 +137,19 @@ sed -i "s/my_example_password/$VSCODE_PASSWORD/g" "$HOME/.zshrc"
 
 #Exoscale
 sudo snap install exoscale-cli
+
+#S3FS Cloud
+mkdir "$HOME/Cloud"
+mkdir "$HOME/.aws"
+
+echo "[default]" > "${HOME}/.aws/credentials"
+echo "aws_access_key_id = $EXOSCALE_API_KEY" >> "${HOME}/.aws/credentials"
+echo "aws_secret_access_key = $EXOSCALE_SECRET_KEY" >> "${HOME}/.aws/credentials"
+
+
+echo "$EXOSCALE_API_KEY:$EXOSCALE_SECRET_KEY" > "$HOME/.passwd-s3fs"
+chmod 600 "$HOME/.passwd-s3fs"
+
+s3fs -o url="$S3_ENDPOINT" "$CLOUD_BUCKET_NAME:/" "$HOME/Cloud"
 
 echo "run: source ~/.zshrc"
