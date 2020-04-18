@@ -56,6 +56,7 @@ is_set EXOSCALE_API_KEY "Enter Exoscale api key"
 is_set EXOSCALE_SECRET_KEY "Enter Exoscale secret key"
 is_set S3_ENDPOINT "Enter S3 custom endpoint"
 is_set CLOUD_BUCKET_NAME "Enter an s3 bucket for your Cloud"
+is_set GOOFYS_VERSION "Enter goofys version (v0.24.0)"
 is_set GIT_NAME "Enter git config name"
 is_set GIT_EMAIL "Enter git config email"
 
@@ -150,6 +151,9 @@ echo "aws_secret_access_key = $EXOSCALE_SECRET_KEY" >> "${HOME}/.aws/credentials
 
 echo "$EXOSCALE_API_KEY:$EXOSCALE_SECRET_KEY" > "$HOME/.passwd-s3fs"
 chmod 600 "$HOME/.passwd-s3fs"
+
+wget -4 "https://github.com/kahing/goofys/releases/download/$GOOFYS_VERSION/goofys"
+chmod +x goofys && sudo mv goofys /usr/local/bin
 
 s3fs -o url="$S3_ENDPOINT" "$CLOUD_BUCKET_NAME:/" "$HOME/Cloud"
 
