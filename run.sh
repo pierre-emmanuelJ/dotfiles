@@ -98,7 +98,7 @@ sudo apt-get update -qq
 sudo apt-get -qq -y install podman
 
 #Install Golang
-mkdir "$HOME/go"
+mkdir -p "$HOME/go"
 wget -4 "https://dl.google.com/go/go$GO_VERSION.linux-amd64.tar.gz"
 sudo tar -C /usr/local -xzf "go$GO_VERSION.linux-amd64.tar.gz"
 GOPATH=/home/ubuntu/go
@@ -114,7 +114,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 nvm install 12.16 #(not used frequently) Can be added to input var
 
 #install alias script
-mkdir "$HOME/.bin"
+mkdir -p "$HOME/.bin"
 $LN "$DOTFILES_FOLDER"/scripts/* "$HOME/.bin"
 
 #Install VScode
@@ -141,8 +141,8 @@ sed -i "s/my_example_password/$VSCODE_PASSWORD/g" "$HOME/.zshrc"
 sudo snap install exoscale-cli
 
 #S3FS Cloud
-mkdir "$HOME/Cloud"
-mkdir "$HOME/.aws"
+mkdir -p "$HOME/Cloud"
+mkdir -p "$HOME/.aws"
 
 echo "[default]" > "${HOME}/.aws/credentials"
 echo "aws_access_key_id = $EXOSCALE_API_KEY" >> "${HOME}/.aws/credentials"
