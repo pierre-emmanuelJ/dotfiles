@@ -67,6 +67,7 @@ alias code="docker run \
             --name vscode \
             --rm  \
             -it \
+            -u "$(id -u):$(id -g)" \
             --label traefik.frontend.rule=Host:${DOMAIN_NAME}  \
             --label traefik.enable=true \
             --network traefik_default \
@@ -76,8 +77,7 @@ alias code="docker run \
             -e ${GO111MODULE} \
 	        -e "PASSWORD=${VSCODE_PASSWORD}" \
             -v ${GOPATH}:/home/coder/go \
-            pierro777/vscode:2.1692-vsc1.39.2 \
-            --allow-http"
+            pierro777/vscode:3.1.1"
 
 alias rcode="docker stop vscode"
 
