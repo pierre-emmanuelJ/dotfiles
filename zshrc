@@ -62,22 +62,29 @@ export NVM_DIR="$HOME/.nvm"
 
 #VScode web
 alias clean-workspace="rm -rf $HOME/.local/share/code-server/Workspaces/*"
-alias code="docker run \
+vscode() {
+	docker run \
             -d \
-            --name vscode \
-            --rm  \
+            --name "vscode" \
             -it \
+            --rm \
             -u "$(id -u):$(id -g)" \
-            --label traefik.frontend.rule=Host:${DOMAIN_NAME}  \
-            --label traefik.enable=true \
+            --label "traefik.enable=true" \
+            --label "traefik.http.routers.vscode.rule=Host(\`${DOMAIN_NAME}\`)" \
+            --label "traefik.http.routers.vscode.entrypoints=websecure" \
+            --label "traefik.http.routers.vscode.tls.certresolver=mydnschallenge" \
+            --label "traefik.http.services.vscode.loadbalancer.server.port=8080" \
             --network traefik_default \
             -v "${PWD}:/home/coder/project" \
             -v "${HOME}/.local/share/code-server:/home/coder/.local/share/code-server"  \
             -v "${HOME}/.cache/code-server:/home/coder/.cache/code-server" \
-            -e ${GO111MODULE} \
-	        -e "PASSWORD=${VSCODE_PASSWORD}" \
-            -v ${GOPATH}:/home/coder/go \
-            pierro777/vscode:3.1.1"
+            -e "GO111MODULE=${GO111MODULE}" \
+            -e "PASSWORD=${VSCODE_PASSWORD}" \
+            -v "${GOPATH}:/home/coder/go" \
+            pierro777/vscode:3.1.1
+}
+
+alias code=vscode
 
 alias rcode="docker stop vscode"
 

@@ -1,17 +1,14 @@
-
-version: '3'
-
+version: "3"
 services:
   traefik:
     restart: always
-    image: traefik:v1.7.16
+    image: traefik:v2.2.0
     read_only: true
-    command:  --web
     ports:
       - "80:80"
       - "443:443"
-      - "81:8080"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./acme.json:/acme.json
-      - ./traefik.toml:/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./Traefik/traefik.yaml:/traefik.yaml:ro
+      - ./Traefik/etc/traefik:/etc/traefik/
+      - ./Traefik/log:/var/log/traefik/

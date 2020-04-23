@@ -118,10 +118,8 @@ mkdir -p "$HOME/.bin"
 $LN "$DOTFILES_FOLDER"/scripts/* "$HOME/.bin"
 
 #Install VScode
-cp -r "$DOTFILES_FOLDER/traefik" "$HOME"
-touch "$HOME/traefik/acme.json" && \
-        chmod 600 "$HOME/traefik/acme.json"
-sed -i "s/example.com/$DOMAIN_NAME/g" "$HOME/traefik/traefik.toml"
+mkdir "$HOME/traefik"
+$LN "$DOTFILES_FOLDER"/traefik/* "$HOME/traefik"
 cd "$HOME/traefik/" && sudo docker-compose up -d && cd -
 mkdir -p "$HOME/.local/share/code-server/extensions"
 chown -R ubuntu "$HOME/.local"
