@@ -81,7 +81,7 @@ vscode() {
             -e "GO111MODULE=${GO111MODULE}" \
             -e "PASSWORD=${VSCODE_PASSWORD}" \
             -v "${GOPATH}:/home/coder/go" \
-            pierro777/vscode:3.1.1
+            pierro777/vscode:3.4.0
 }
 
 alias code=vscode
