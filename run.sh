@@ -28,7 +28,6 @@ PACKAGES=(
   rename
   zsh
   vim
-  python-pip
   python3
   coreutils
   fuse
