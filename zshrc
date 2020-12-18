@@ -82,6 +82,7 @@ vscode() {
             -e "PASSWORD=${VSCODE_PASSWORD}" \
             -v "${GOPATH}:/home/coder/go" \
             -v "${HOME}/.m2/:/home/coder/.m2/" \
+	    -v "${HOME}/.lein/:/home/coder/.lein/" \
             pierro777/vscode:3.7.4
 }
 
