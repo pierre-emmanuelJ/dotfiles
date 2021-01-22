@@ -80,6 +80,7 @@ vscode() {
             -v "${HOME}/.cache/code-server:/home/coder/.cache/code-server" \
             -e "GO111MODULE=${GO111MODULE}" \
             -e "PASSWORD=${VSCODE_PASSWORD}" \
+	    -e "SHELL=/bin/bash" \
             -v "${GOPATH}:/home/coder/go" \
             -v "${HOME}/.m2/:/home/coder/.m2/" \
             -v "${HOME}/.lein/:/home/coder/.lein/" \
@@ -109,3 +110,6 @@ cosa() {
 #NVM node version manager
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# Direnv
+eval "$(direnv hook zsh)"
