@@ -23,6 +23,9 @@ PACKAGES=(
   tree
   links
   shellcheck
+  openjdk-11-jdk
+  rlwrap
+  leiningen
   jq
   detox
   rename
@@ -32,6 +35,7 @@ PACKAGES=(
   coreutils
   fuse
   s3fs
+  direnv
 )
 
 #User Creation
@@ -155,5 +159,18 @@ chmod +x goofys && sudo mv goofys /usr/local/bin
 #goofys --file-mode=0666 --dir-mode=0777 --endpoint "https://sos-ch-dk-2.exo.io" cloud  "$HOME/Cloud"
 
 s3fs -o url="$S3_ENDPOINT" "$CLOUD_BUCKET_NAME:/" "$HOME/Cloud"
+
+#Shellcheck
+SHELLCHECK_VERSION=v0.7.1
+wget https://github.com/koalaman/shellcheck/releases/download/$SHELLCHECK_VERSION/shellcheck-$SHELLCHECK_VERSION.linux.x86_64.tar.xz
+tar -xvf shellcheck-$SHELLCHECK_VERSION.linux.x86_64.tar.xz
+cd shellcheck-$SHELLCHECK_VERSION && mv shellcheck /usr/local/bin/ && cd ..
+
+#Clojure
+CLJ_VERSION=1.10.1.763
+curl -O https://download.clojure.org/install/linux-install-$CLJ_VERSION.sh
+chmod +x linux-install-$CLJ_VERSION.sh
+sudo ./linux-install-$CLJ_VERSION.sh
+rm -f ./linux-install-$CLJ_VERSION.sh
 
 echo "run: source ~/.zshrc"
