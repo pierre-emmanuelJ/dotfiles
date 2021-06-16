@@ -1,8 +1,15 @@
 version: "3"
+
+networks:
+  default:
+    external:
+      name: host
+
 services:
   traefik:
     restart: always
     image: traefik:v2.2.0
+    network_mode: host
     read_only: true
     ports:
       - "80:80"
